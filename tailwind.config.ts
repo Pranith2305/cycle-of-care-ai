@@ -70,7 +70,7 @@ export default {
 				luteal: '#FFDD99',
 			},
 			fontFamily: {
-				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+				sans: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
 				display: ['"Playfair Display"', 'serif'],
 			},
 			borderRadius: {
