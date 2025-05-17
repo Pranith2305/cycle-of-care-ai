@@ -100,14 +100,14 @@ const SymptomLogger: React.FC<SymptomLoggerProps> = ({ cycleData, onUpdateSympto
         <div className="space-y-2">
           <Label>Mood</Label>
           <Select
-            value={symptoms.mood || ''}
+            value={symptoms.mood || undefined}
             onValueChange={(value) => handleSymptomChange('mood', value || undefined)}
           >
             <SelectTrigger>
               <SelectValue placeholder="How are you feeling?" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Not specified</SelectItem>
+              <SelectItem value="not-specified">Not specified</SelectItem>
               <SelectItem value="happy">Happy 😊</SelectItem>
               <SelectItem value="calm">Calm 😌</SelectItem>
               <SelectItem value="irritable">Irritable 😤</SelectItem>
@@ -120,14 +120,14 @@ const SymptomLogger: React.FC<SymptomLoggerProps> = ({ cycleData, onUpdateSympto
         <div className="space-y-2">
           <Label>Energy Level</Label>
           <Select 
-            value={symptoms.energy || ''}
+            value={symptoms.energy || undefined}
             onValueChange={(value) => handleSymptomChange('energy', value || undefined)}
           >
             <SelectTrigger>
               <SelectValue placeholder="How's your energy today?" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Not specified</SelectItem>
+              <SelectItem value="not-specified">Not specified</SelectItem>
               <SelectItem value="high">High ⚡</SelectItem>
               <SelectItem value="normal">Normal ✨</SelectItem>
               <SelectItem value="low">Low 🔋</SelectItem>
@@ -186,14 +186,14 @@ const SymptomLogger: React.FC<SymptomLoggerProps> = ({ cycleData, onUpdateSympto
         <div className="space-y-2">
           <Label>Flow</Label>
           <Select 
-            value={symptoms.flow || ''}
+            value={symptoms.flow || undefined}
             onValueChange={(value) => handleSymptomChange('flow', value || undefined)}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select flow intensity" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Not specified</SelectItem>
+              <SelectItem value="not-specified">Not specified</SelectItem>
               <SelectItem value="none">None</SelectItem>
               <SelectItem value="spotting">Spotting</SelectItem>
               <SelectItem value="light">Light</SelectItem>
