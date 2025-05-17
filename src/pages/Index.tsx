@@ -6,12 +6,14 @@ import Calendar from '@/components/Calendar';
 import SymptomLogger from '@/components/SymptomLogger';
 import PhaseInfo from '@/components/PhaseInfo';
 import PartnerTips from '@/components/PartnerTips';
+import BottomNavbar from '@/components/BottomNavbar';
 import { CycleData, SymptomEntry } from '@/types';
 import { getCurrentPhase, getDaysUntilNextPeriod } from '@/utils/cycleUtils';
 import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState<'home' | 'calendar' | 'symptoms'>('home');
   const [cycleData, setCycleData] = useState<CycleData>({
     lastPeriodStartDate: subDays(new Date(), 14),
     averageCycleLength: 28,
@@ -63,51 +65,104 @@ const Index = () => {
   
   const currentPhase = getCurrentPhase(cycleData);
   const daysUntilNextPeriod = getDaysUntilNextPeriod(cycleData);
-  
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 p-4 md:p-8">
-      <header className="max-w-7xl mx-auto mb-8 text-center">
-        <h1 className="font-bold text-4xl md:text-5xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-pulse-gentle">
-          CycleMate
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          Your supportive menstrual cycle companion
-        </p>
-      </header>
-      
-      <main className="max-w-7xl mx-auto">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div className="md:col-span-1 space-y-6">
+
+  // Render different content based on active tab
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'home':
+        return (
+          <div className="space-y-6">
             <CycleTracker 
               cycleData={cycleData} 
               onUpdateCycleData={handleUpdateCycleData} 
+            />
+            <PhaseInfo 
+              currentPhase={currentPhase}
+              cycleData={cycleData}
             />
             <PartnerTips 
               currentPhase={currentPhase} 
               daysUntilNextPeriod={daysUntilNextPeriod}
             />
           </div>
-          
-          <div className="md:col-span-1 space-y-6">
+        );
+      case 'calendar':
+        return (
+          <div className="space-y-6">
             <Calendar cycleData={cycleData} />
             <PhaseInfo 
               currentPhase={currentPhase}
               cycleData={cycleData}
             />
           </div>
-          
-          <div className="md:col-span-2 lg:col-span-1">
-            <SymptomLogger 
-              cycleData={cycleData} 
-              onUpdateSymptoms={handleUpdateSymptoms}
-            />
+        );
+      case 'symptoms':
+        return (
+          <SymptomLogger 
+            cycleData={cycleData} 
+            onUpdateSymptoms={handleUpdateSymptoms}
+          />
+        );
+    }
+  };
+  
+  return (
+    <div className="flex flex-col min-h-screen bg-background">
+      {/* App header */}
+      <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-sm border-b border-border p-4">
+        <div className="text-center">
+          <h1 className="font-bold text-2xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            CycleMate
+          </h1>
+          <p className="text-xs text-muted-foreground">
+            Your supportive menstrual cycle companion
+          </p>
+        </div>
+        
+        {/* Mobile tab navigation */}
+        <div className="flex justify-center mt-4">
+          <div className="flex space-x-2 bg-muted/50 rounded-full p-1">
+            <button 
+              onClick={() => setActiveTab('home')}
+              className={`px-4 py-1.5 text-sm font-medium rounded-full ${
+                activeTab === 'home' 
+                ? 'bg-background text-primary shadow-sm' 
+                : 'text-muted-foreground'
+              }`}
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => setActiveTab('calendar')}
+              className={`px-4 py-1.5 text-sm font-medium rounded-full ${
+                activeTab === 'calendar' 
+                ? 'bg-background text-primary shadow-sm' 
+                : 'text-muted-foreground'
+              }`}
+            >
+              Calendar
+            </button>
+            <button 
+              onClick={() => setActiveTab('symptoms')}
+              className={`px-4 py-1.5 text-sm font-medium rounded-full ${
+                activeTab === 'symptoms' 
+                ? 'bg-background text-primary shadow-sm' 
+                : 'text-muted-foreground'
+              }`}
+            >
+              Log
+            </button>
           </div>
         </div>
+      </header>
+      
+      {/* Main content with padding for the bottom navigation */}
+      <main className="flex-1 px-4 pb-20 pt-4 max-w-lg mx-auto w-full">
+        {renderContent()}
       </main>
       
-      <footer className="max-w-7xl mx-auto mt-8 text-center text-sm text-muted-foreground">
-        <p>CycleMate - Supporting relationships through cycle awareness</p>
-      </footer>
+      {/* Bottom navigation */}
+      <BottomNavbar />
     </div>
   );
 };

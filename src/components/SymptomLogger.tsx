@@ -68,12 +68,9 @@ const SymptomLogger: React.FC<SymptomLoggerProps> = ({ cycleData, onUpdateSympto
   };
   
   return (
-    <Card className="shadow-md">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-primary">Symptom Logger</CardTitle>
-        <CardDescription>Track how you're feeling during your cycle</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="w-full">
+      <h2 className="text-xl font-bold mb-4 text-primary">Symptom Logger</h2>
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label>Date</Label>
           <Popover>
@@ -213,8 +210,8 @@ const SymptomLogger: React.FC<SymptomLoggerProps> = ({ cycleData, onUpdateSympto
         </div>
 
         <Button className="w-full" onClick={handleSave}>Save Symptoms</Button>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
