@@ -69,6 +69,10 @@ export default {
 				ovulation: '#FF9A5C',
 				luteal: '#FFDD99',
 			},
+			fontFamily: {
+				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+				display: ['"Playfair Display"', 'serif'],
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
